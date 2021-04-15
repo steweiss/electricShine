@@ -19,7 +19,27 @@ install_nodejs <- function(node_url = "https://nodejs.org/dist",
 
   # Check if node and npm are already installed
   nodejs_path <-  normalizePath(nodejs_path, winslash = "/")
-
+  
+  os <- electricShine::get_os()
+      
+   if (identical(os, "win")) {
+     platform <- "win"
+     ext <- "zip"
+   } else if (identical(os, "mac")) {
+     platform <- "darwin"
+     ext <- "tar.gz"
+   } else if (identical(os, "unix")) {
+     platform <- "linux"
+     ext <- "tar.xz"
+   }
+  
+  if (base::version$arch[[1]] == "x86_64") {
+     arch <- "x64"
+  } else {
+     #TODO: I think this has been fixed and isn't true. But double-check
+     stop("Unfortunately this build machine is unsupported")
+  }
+  
   subfolder <- file.path(nodejs_path,
                          glue::glue("node-{nodejs_version}-{platform}-{arch}"),
                          fsep = "/")
