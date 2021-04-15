@@ -44,7 +44,7 @@ run_build_release <- function(nodejs_path = file.path(system.file(package = "ele
                    intern=F,
                    ignore.stdout=F,
                    ignore.stderr=F))
-
+    setwd(app_path)
     message(system("cmd.exe",
                    glue::glue('cd {quoted_app_path} && {quoted_npm_path} install --scripts-prepend-node-path'),
                    invisible = FALSE,
